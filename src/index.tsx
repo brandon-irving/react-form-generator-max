@@ -7,25 +7,25 @@ import { FormikProps, RowProps, ColProps, FormGeneratorProps } from './types'
 
 const EmptyDiv = () => <div style={{ display: 'block', height: '45px' }} />
 
-export const useWithContext = (props: {cacheStateKey?: any, children: any, initialValues: any}) => {
+export const useWithContext = (props: { cacheStateKey?: any, children: any, initialValues: any }) => {
   return (
     <ContextStateProvider cacheStateKey={props.cacheStateKey} stateConfig={props.initialValues}>
       {props.children}
     </ContextStateProvider>
   )
 }
-export const FormGenerator = (props: any)=>{
-  if((props.components && !props.FormGeneratorProps) || (!props.components && props.FormGeneratorProps)){
+export const FormGenerator = (props: any) => {
+  if ((props.components && !props.FormGeneratorProps) || (!props.components && props.FormGeneratorProps)) {
     throw 'Error: components prop and FormGeneratorProps must be used together to work'
   }
-  else if(props.components){
-    return(
-      <ContextStateProvider  stateConfig={{components: props.components || {}}}>
+  else if (props.components) {
+    return (
+      <ContextStateProvider stateConfig={{ components: props.components || {} }}>
         <FormGeneratorContent {...props.FormGeneratorProps} />
-    </ContextStateProvider>
+      </ContextStateProvider>
     )
   }
-  return(
+  return (
     <FormGeneratorContent {...props} />
   )
 }
@@ -33,19 +33,14 @@ export const FormGeneratorContent = (props: FormGeneratorProps) => {
   const { updateContextState } = useContextState() || {}
 
   async function submitForm(values: any, formikProps: FormikHelpers<any>) {
-    const { setSubmitting } = formikProps
     props.handleSubmit && props.handleSubmit(values, formikProps)
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
   }
-const emptyFunc = ()=>{
-  return {}
-}
+  const emptyFunc = () => {
+    return {}
+  }
   return <Formik
     initialValues={props.initialValues}
-    validate={props.validation ? (values:any)=>props.validation(values) : emptyFunc}
+    validate={props.validation ? (values: any) => props.validation(values) : emptyFunc}
     onSubmit={submitForm}
   >
     {(formikProps: FormikProps) => {
@@ -54,9 +49,9 @@ const emptyFunc = ()=>{
 
       return (
         <Grid fluid>
-          <form onSubmit={(e:any)=>{
+          <form onSubmit={(e: any) => {
             handleSubmit(e)
-            }}>
+          }}>
             {props.bluePrint.Rows.map((row: RowProps, i: number) => {
               // TODO: extract into components file
               // TODO: add in types
@@ -64,7 +59,7 @@ const emptyFunc = ()=>{
               //   left?: string,
               //   center?: string,
               //   right?: string,
-                
+
               // }
               // interface TitleTypeProps {
               //   row?: string,
@@ -87,7 +82,7 @@ const emptyFunc = ()=>{
                 const displayRowTitle = props.title && props.type === 'row'
                 const displayColTitle = props.title && props.type === 'col'
                 return <React.Fragment>
-                  {displayRowTitle && <h2 style={titleStyle}>{props.title}</h2> }
+                  {displayRowTitle && <h2 style={titleStyle}>{props.title}</h2>}
                   {displayColTitle && <h3 style={titleStyle}>{props.title}</h3>}
                   {props.underline && <div style={underlineStyle} />}
                 </React.Fragment>
@@ -100,13 +95,13 @@ const emptyFunc = ()=>{
                     row.Cols.map((col: ColProps, j: number) => {
                       if (col.Inputs) {
 
-                        return <Col style={{margin: '10px'}} key={j} xs={col.as || undefined}>
+                        return <Col style={{ margin: '10px' }} key={j} xs={col.as || undefined}>
                           <Title titleLocation={col.titleLocation} title={col.title} underline={col.underline} type="col" />
                           {inputGenerator({ Inputs: col.Inputs, formikProps, updateContextState })}
                         </Col>
 
                       }
-                      return <Col style={{margin: '10px'}} key={j} xs={col.as || undefined}>
+                      return <Col style={{ margin: '10px' }} key={j} xs={col.as || undefined}>
                         <Title titleLocation={col.titleLocation} title={col.title} underline={col.underline} type="col" />
                       </Col>
                     })

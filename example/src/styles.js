@@ -1,4 +1,8 @@
 export const styles = {
+
+  formContainer: {
+margin: '3%'
+  },
   customButton: {
     color: '#fff',
     backgroundColor: '#007bff',
