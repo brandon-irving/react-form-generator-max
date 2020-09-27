@@ -28,10 +28,6 @@ const App = () => {
   )
 }
 
-const ContextEnabledFormContainer = () => {
-  const [initialValues, setInitialValues] = React.useState({ first: '', last: '' })
-  return (useWithContext({ children: <ContextEnabledForm setInitialValues={setInitialValues} initialValues={initialValues} />, initialValues }))
-}
 const BasicForm = () => {
   const initialValues = { first: '', last: '' }
   function handleSubmit(values: any, formikProps: any){
@@ -47,6 +43,10 @@ const BasicForm = () => {
     handleSubmit
   }
   return (<FormGenerator {...FormGeneratorProps} />)
+}
+const ContextEnabledFormContainer = () => {
+  const [initialValues, setInitialValues] = React.useState({ first: '', last: '' })
+  return (useWithContext({ children: <ContextEnabledForm setInitialValues={setInitialValues} initialValues={initialValues} />, initialValues }))
 }
 const ContextEnabledForm = (props: any) => {
   const { updateContextState } = FormGenerator.useContextState()
@@ -67,7 +67,6 @@ const ContextEnabledForm = (props: any) => {
 const ComplexForm = () => {
   const initialValues = { first: '', last: '', email: '', telephone: '' }
   const validation = (values: any,) => {
-    console.log('log: values', values)
     const errors = Object.keys(values).reduce((acc: object, curr: string) => {
       let newErrors = { ...acc }
       if (curr !== 'telephone' && !values[curr].length) {

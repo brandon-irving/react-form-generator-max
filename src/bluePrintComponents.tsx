@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { InputProps, InputFieldProps, InputGeneratorProps } from './types'
+import {  InputFieldProps, InputGeneratorProps } from './types'
 import { transformInput, inputMap } from './helperFunctions'
 import styles from './styles.module.css'
 import { useContextState } from 'dynamic-context-provider';
@@ -30,11 +30,11 @@ export function inputGenerator(props: InputGeneratorProps) {
         visible,
         Inputs,
     } = props
-
     return (
         <div style={{ display: visible ? 'none' : 'block', width: '100%' }}>
             {
-                Inputs.map((input: InputProps, i: number) => {
+                // TODO: find out issue with typing
+                Inputs.map((input: any, i: number) => {
                     function handleFormChange(e: any) {
                         const value = e.target.value
                         const key = input.name

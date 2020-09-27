@@ -22,7 +22,7 @@ export interface InputProps {
     helperText?: string,
     hideTitle?: boolean,
     Custom?: (values: any) => React.ReactElement;
-    Title: any,
+    Title?: any,
 
   }
 
