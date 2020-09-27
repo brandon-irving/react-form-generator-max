@@ -13,6 +13,7 @@ npm install --save form-generator
 ## Usage
 
 ```tsx
+Currently in development, to see how this package is used, install it and cd into /example and run npm start
 Coming soon
 ```
 
