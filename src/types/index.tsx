@@ -4,7 +4,7 @@ export interface FormGeneratorProps {
   bluePrint: any;
   validation?: any;
   submitButton?: (values: any) => React.ReactElement;
-  handleSubmit?: (values: any) => any;
+  handleSubmit?: (values: any, formikProps:any) => any;
 }
 
 export interface OnInputChangeProps {
@@ -20,7 +20,10 @@ export interface InputProps {
     options?:Array<object>,
     visible?:boolean,
     helperText?: string,
-    Inputs?: string,
+    hideTitle?: boolean,
+    Custom?: (values: any) => React.ReactElement;
+    Title: any,
+
   }
 
   export interface RowProps {
@@ -28,24 +31,32 @@ export interface InputProps {
     visible?: boolean,
     Inputs?: Array<InputProps> ,
     Cols?: Array<ColProps>,
+    title?: string,
+    titleLocation?: string,
+    underline?: boolean,
   }
   export interface ColProps {
     visible?: boolean,
     Inputs?: Array<InputProps>,
     as?:number,
+    title?: string,
+    titleLocation?: string,
+    underline?: boolean,
+
   }
   
   export interface InputFieldProps {
     input: InputProps,
     errors: object,
     handleFormChange: (value:any)=>void,
-    values: any
+    values: any,
+    submitCount?: number
 }
 export interface InputGeneratorProps {
   formikProps: FormikProps,
   visible?: boolean,
   updateContextState: any,
-  Inputs: Array<object>
+  Inputs: Array<object>,
 }
 export interface FormikProps  {
   dirty: boolean,

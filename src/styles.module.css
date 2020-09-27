@@ -29,8 +29,18 @@
     margin-top: .25rem;
     color: #6c757d!important;
 }
-.inputTextError{
+.errorTextDefault{
   display: block;
   margin-top: .25rem;
   color: #dd2d20!important;
+}
+.checkboxLeft {
+margin-left: 10px
+}
+.checkboxRight {
+  margin-right: 10px
+}
+.label {
+  align-items: center;
+    display: flex;
 }
