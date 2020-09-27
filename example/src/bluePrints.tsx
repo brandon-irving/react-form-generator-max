@@ -2,7 +2,9 @@ import * as React from 'react'
 import { styles } from './styles.js'
 
 const CustomComponent = (props: any) => {
-    return <input {...props} style={styles.customForm} />
+    const inputProps = {...props}
+    delete inputProps.Title
+    return <input {...inputProps} style={styles.customForm} />
 }
 const CustomInputTitle = (props: any) => {
     return <h2 style={{ margin: 0 }}>{props.name}</h2>
