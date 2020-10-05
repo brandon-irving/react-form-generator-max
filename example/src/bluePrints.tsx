@@ -10,11 +10,11 @@ const CustomInputTitle = (props: any) => {
     return <h2 style={{ margin: 0 }}>{props.name}</h2>
 }
 
-export const BasicFormBluePrint = (isBasic: boolean) => {
+export const BasicFormBluePrint = () => {
     return {
         Rows: [
             {
-                title: isBasic ? 'Basic Form' : 'Context Enabled Form',
+                title: 'Row Title',
                 Cols: [
                     {
                         Inputs: [
@@ -22,11 +22,41 @@ export const BasicFormBluePrint = (isBasic: boolean) => {
                                 id: 'first',
                                 name: 'first',
                                 type: 'text',
+                                onChange: (value: any, formikProps:any)=>{
+                                    console.log('input onchange', {formikProps, value})
+                                }
                             },
+                        ],
+                    }
+                ]
+            },
+            {
+                Cols: [
+                    {
+                        title: 'Col Title',
+                        Inputs: [
                             {
                                 id: 'last',
                                 name: 'last',
                                 type: 'text',
+                            },
+                        ],
+                    }
+                ]
+            },
+            {
+                Cols: [
+                    {
+                        Inputs: [
+                            {
+                                id: 'role',
+                                name: 'role',
+                                type: 'select',
+                                options: [
+                                    {value: 'admin', label: 'admin'},
+                                    {value: 'user', label: 'user'},
+                                    {value: 'viewer', label: 'viewer'},
+                            ]
                             },
                         ],
                     }
@@ -36,6 +66,7 @@ export const BasicFormBluePrint = (isBasic: boolean) => {
         ]
     }
 }
+
 export const ComplexFormBluePrint = {
     Rows: [
         {

@@ -1,97 +1,75 @@
 import React from 'react'
-import {
-  FormGenerator,
-  useWithContext
-} from 'form-generator'
+import { ComponentsContextProvider, FormGenerator, useWithContext } from 'form-generator'
 import 'form-generator/dist/index.css'
-import { styles } from './styles.js'
-import { BasicFormBluePrint, ComplexFormBluePrint } from './bluePrints'
+import { BasicFormBluePrint } from './bluePrints'
 
-const CustomButtonComponent = (props: any) => {
-  return <button style={styles.customButton} type="submit" disabled={!props.dirty}>Submit the Form!</button>
+// Replaces all components with your own custom components
+const components = {
+  input: (props: any)=>{
+    // console.log('components: Input', props)
+    return <input {...props}/>
+  },
+  button: (props: any)=>{
+    console.log('components: button', props)
+    return <button style={{width: '150px', height: '30px',color:  props.disabled ? 'black' : 'white', backgroundColor: props.disabled ? 'gainsboro':'blue'}} {...props}>Custom Button</button>
+  }
 }
+
 const App = () => {
+
   return (
-    <div style={styles.formContainer} >
-      <div style={{ border: '1px solid', textAlign: "center" }}>
-        <BasicForm />
-      </div>
-      <div style={{ border: '1px solid', textAlign: "center" }}>
-        <ContextEnabledFormContainer />
-      </div>
-      <div style={{ border: '1px solid', textAlign: "center" }}>
-        <ComplexForm />
-      </div>
+    <div>
+      <ComponentsContextProvider components={components}>
+     <Home />
+      </ComponentsContextProvider>
     </div>
-
-
   )
 }
 
-const BasicForm = () => {
-  const initialValues = { first: '', last: '' }
-  function handleSubmit(values: any, formikProps: any){
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      formikProps.setSubmitting(false);
-    }, 400);
-    formikProps.resetForm()
+const Home = () => {
+
+  const initialValues ={
+    first: 'Brandon',
+    last: 'Irving',
+    role: 'user',
   }
-  const FormGeneratorProps = { 
-    initialValues, 
-    bluePrint: BasicFormBluePrint(true), 
+
+  return (
+    <div>
+      {/* Makes state accessible to all children */}
+      { useWithContext({
+        children: <ComponentForm 
+        initialValues={initialValues}
+        />, 
+        initialValues})}
+    </div>
+  )
+}
+
+const ComponentForm = (props: any) => {
+  // const { first, last, updateContextState } = FormGenerator.useContextState()
+
+   async function handleSubmit(values:any, formikProps:any){
+  console.log('onSubmit', {values, formikProps})
+  }
+  const submitConfig ={
+    button: (props:any)=><button type="submit" {...props}>Submit</button>,
     handleSubmit
   }
-  return (<FormGenerator {...FormGeneratorProps} />)
-}
-const ContextEnabledFormContainer = () => {
-  const [initialValues, setInitialValues] = React.useState({ first: '', last: '' })
-  return (useWithContext({ children: <ContextEnabledForm setInitialValues={setInitialValues} initialValues={initialValues} />, initialValues }))
-}
-const ContextEnabledForm = (props: any) => {
-  const { updateContextState } = FormGenerator.useContextState()
-  function handleSubmit(values: any, formikProps: any) {
-    props.setInitialValues(values)
-    updateContextState({ ...values })
-
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      formikProps.setSubmitting(false);
-    }, 400);
-    formikProps.resetForm()
-  }
-  const FormGeneratorProps = { initialValues: props.initialValues, bluePrint: BasicFormBluePrint(false), handleSubmit }
-  return (<FormGenerator {...FormGeneratorProps} />)
-}
-
-const ComplexForm = () => {
-  const initialValues = { first: '', last: '', email: '', telephone: '' }
-  const validation = (values: any,) => {
-    const errors = Object.keys(values).reduce((acc: object, curr: string) => {
-      let newErrors = { ...acc }
-      if (curr !== 'telephone' && !values[curr].length) {
-        newErrors[curr] = 'Required'
-      }
-      return { ...newErrors }
-    }, {})
+  function handleValidation(values:any){
+    const errors = {}
+    console.log('validation', values)
     return errors
   }
-
-  const FormGeneratorProps = {
-    validation,
-    initialValues,
-    bluePrint: ComplexFormBluePrint,
-    handleSubmit: (values: any, formikProps: any) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        formikProps.setSubmitting(false);
-      }, 400);
-    },
-    submitButton: (props: any) => <CustomButtonComponent {...props} />
-  }
-  return (<FormGenerator {...FormGeneratorProps} />)
+  return (
+      <FormGenerator 
+      validation={handleValidation}
+      bluePrint={BasicFormBluePrint()}
+      initialValues={props.initialValues} 
+      submitConfig={submitConfig}
+      />
+  )
 }
-
 
 
 export default App
