@@ -6,11 +6,9 @@ import { BasicFormBluePrint } from './bluePrints'
 // Replaces all components with your own custom components
 const components = {
   input: (props: any)=>{
-    // console.log('components: Input', props)
     return <input style={{width: '100%'}} {...props}/>
   },
   button: (props: any)=>{
-    console.log('components: button', props)
     return <button style={{width: '150px', height: '30px',color:  props.disabled ? 'black' : 'white', backgroundColor: props.disabled ? 'gainsboro':'blue'}} {...props}>Custom Button</button>
   }
 }
