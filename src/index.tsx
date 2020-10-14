@@ -1,10 +1,11 @@
 import React from 'react'
 import { ContextStateProvider, useContextState } from 'dynamic-context-provider';
 import { Formik } from 'formik'
-export { ComponentsContextProvider } from './ComponentsContext'
+import { ComponentsContextProvider as CCP } from './ComponentsContext'
 import { MapGenerator } from './MapGenerator'
 import { useComponentsContext } from './ComponentsContext';
 
+export const ComponentsContextProvider = CCP
 export const FormGenerator = (props:any)=>{
   const { components: {button} } = useComponentsContext()
 
