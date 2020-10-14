@@ -10,7 +10,7 @@ export const MapGenerator = (props: any) => {
                 props.bluePrint.Rows.map((row: any, i: number) => {
                     return (
                         <Row key={i}>
-                            <div style={{ marginBottom: '20px' }}>
+                            <div style={{ width: '100%', marginBottom: '20px' }}>
                                 {row.title}
                                 <ColGenerator formikProps={props.formikProps} cols={row.Cols} />
                             </div>
@@ -26,7 +26,8 @@ export const MapGenerator = (props: any) => {
 function ColGenerator(props: any) {
 
     return props.cols.map((col: any, i: number) => {
-        return (<div key={i}>
+        return (
+        <div key={i}>
             {col.title}
             <Col xs={col.as || 12} >
                 <InputGenerator formikProps={props.formikProps} key={i} inputs={col.Inputs} />
@@ -55,10 +56,22 @@ function InputGenerator(props: any) {
             value: props.formikProps.values[input.name],
             onChange: handleChange,
         }
+
+        let label = input.label || ''
+        if(typeof input.label === 'function'){
+            label = input.label(input)
+        }
+
         // Remove anything that isnt a native input prop
+        delete inputProps.label
         return (
-            <InputMap {...inputProps} key={i}/>
-            // <Input {...inputProps} key={i} />
+            <React.Fragment key={i}>
+                <div style={{marginBottom: '5px'}}>
+                {label}
+                </div>
+           
+            <InputMap {...inputProps} />
+            </React.Fragment>
         )
     })
 

@@ -7,7 +7,7 @@ import { BasicFormBluePrint } from './bluePrints'
 const components = {
   input: (props: any)=>{
     // console.log('components: Input', props)
-    return <input {...props}/>
+    return <input style={{width: '100%'}} {...props}/>
   },
   button: (props: any)=>{
     console.log('components: button', props)

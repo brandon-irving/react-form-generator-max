@@ -17,8 +17,10 @@ export const BasicFormBluePrint = () => {
                 title: 'Row Title',
                 Cols: [
                     {
+                        as:6,
                         Inputs: [
                             {
+                                label: ()=><div style={{color: 'blue'}}>First</div>,
                                 id: 'first',
                                 name: 'first',
                                 type: 'text',
