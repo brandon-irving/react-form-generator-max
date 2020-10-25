@@ -1,4 +1,4 @@
-# form-generator
+# form-generator-max
 
 > Create complex forms, like really fast
 
