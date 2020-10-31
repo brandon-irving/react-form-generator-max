@@ -47,7 +47,7 @@ function InputGenerator(props: any) {
             if (input.onChange) {
                 input.onChange(e.target.value, props.formikProps)
             }
-            updateContextState({ [input.name]: e.target.value })
+            updateContextState && updateContextState({ [input.name]: e.target.value })
             props.formikProps.handleChange(e)
 
         }

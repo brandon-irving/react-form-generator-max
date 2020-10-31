@@ -1,7 +1,7 @@
 import React from 'react'
 import { ComponentsContextProvider, FormGenerator, useWithContext } from 'form-generator'
 import 'form-generator/dist/index.css'
-import { BasicFormBluePrint } from './bluePrints'
+import { BasicFormBluePrint, ExampleFormBluePrint } from './bluePrints'
 
 // Replaces all components with your own custom components
 const components = {
@@ -20,10 +20,22 @@ const App = () => {
       <ComponentsContextProvider components={components}>
      <Home />
       </ComponentsContextProvider>
+      <Example />
     </div>
   )
 }
 
+const Example = ()=>{
+  const initialValues = {phone: '954', addy: '234'}
+  return(
+    <FormGenerator 
+    validation={()=>{}}
+    bluePrint={ExampleFormBluePrint()}
+    initialValues={initialValues} 
+    // submitConfig={submitConfig}
+    />
+  )
+}
 const Home = () => {
 
   const initialValues ={

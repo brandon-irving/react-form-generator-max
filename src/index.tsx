@@ -31,7 +31,12 @@ export const FormGenerator = (props:any)=>{
       return (
         <form onSubmit={formikProps.handleSubmit}>
           <MapGenerator formikProps={formikProps} bluePrint={bluePrint} />
+          <div style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+          }}>
           {button(buttonProps)}
+          </div>
         </form>
       )
     }
